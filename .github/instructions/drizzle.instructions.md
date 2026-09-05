@@ -55,6 +55,32 @@ export async function getAllGameIds(db: Database): Promise<number[]> {
 - Map raw rows to the app-facing `Game`/`Publisher`/`Category` types in one place; don't leak Drizzle row shapes into components.
 - Keep ordering/lookup logic in `games.ts`, not in pages.
 
+## Documentation and Comments
+
+- Every exported function in `db/` and `src/lib/` must have a TSDoc/JSDoc comment immediately above it.
+- Describe the function's purpose, every parameter (including the injectable `db` argument), and its return value. Document important failure or ordering guarantees when they are part of the contract.
+- Comment the intent behind non-obvious queries, transformations, or schema decisions. Do not restate what the TypeScript or SQL already says.
+- Update or remove comments whenever the related implementation changes; stale documentation is a bug.
+
+```ts
+/**
+ * Returns all games in stable title order for deterministic static builds.
+ *
+ * @param db Injectable Drizzle database client used for the query.
+ * @returns Games mapped to the app-facing type.
+ */
+export async function getAllGames(db: Database): Promise<Game[]> {
+  // Query ordering is part of the static-build contract.
+  return [];
+}
+```
+
+## TypeScript Formatting and Types
+
+- Use single quotes, semicolons, trailing commas in multiline literals, and two-space indentation, matching the existing ESLint configuration.
+- Prefer `import type` for type-only imports and keep one responsibility per function.
+- Give exported functions explicit parameter and return types. ESLint enforces explicit module-boundary types for TypeScript files.
+
 ## Determinism
 
 Seed-derived values must be reproducible across builds. Derive star ratings from a stable hash of the title (`ratingFromTitle`) — **never** `Math.random()`.
