@@ -50,6 +50,15 @@ Refer to technology-specific instruction files:
 - Keep components focused on a single responsibility
 - Use props for configuration, not duplication
 - Document component APIs with TypeScript types
+- Add a short TSDoc comment for each reusable component's `Props` interface and its public properties.
+- Comments must explain intent, design decisions, or accessibility rationale ("why"), not restate the markup, prop name, or CSS utility ("what").
+- Treat stale comments and stale prop documentation as defects: update or remove them in the same change as the related component.
+
+### Comment Philosophy
+
+- Prefer clear names and semantic HTML over explanatory comments.
+- Add a comment only when the reason is not evident from the code, such as a browser workaround, an accessibility requirement, or a deliberate static-rendering tradeoff.
+- Keep comments concise and specific. Never use comments as a substitute for refactoring confusing code.
 
 ## Development Workflow
 
